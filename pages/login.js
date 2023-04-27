@@ -1,7 +1,13 @@
-import React from "react";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import Layout from "@/components/Layout";
 
-const login = () => {
-  return <div>Login</div>;
-};
+const inter = Inter({ subsets: ["latin"] });
 
-export default login;
+export default function Login() {
+  return (
+    <Layout>
+      <h1 className="container">Login</h1>
+    </Layout>
+  );
+}
