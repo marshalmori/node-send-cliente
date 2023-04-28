@@ -1,8 +1,14 @@
+import { useContext } from "react";
 import Layout from "@/components/Layout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import authContext from "@/context/auth/authContext";
 
 const CrearCuenta = () => {
+  // Acceder al state
+  const AuthContext = useContext(authContext);
+  const { usuarioAutenticado, token } = AuthContext;
+
   // Fomulario y validación con Formik y Yup
   const formik = useFormik({
     initialValues: {
