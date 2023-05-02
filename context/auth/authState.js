@@ -70,13 +70,17 @@ const AuthState = ({ children }) => {
     }
   };
 
-  // Usuario autenticado
-  const usuarioAutenticado = (nombre) => {
-    dispatch({
-      type: USUARIO_AUTENTICADO,
-      payload: nombre,
-    });
+  const usuarioAutenticado = async () => {
+    console.log("Revisando...");
   };
+
+  // // Usuario autenticado
+  // const usuarioAutenticado = (nombre) => {
+  //   dispatch({
+  //     type: USUARIO_AUTENTICADO,
+  //     payload: nombre,
+  //   });
+  // };
 
   return (
     <authContext.Provider
@@ -86,8 +90,8 @@ const AuthState = ({ children }) => {
         usuario: state.usuario,
         mensaje: state.mensaje,
         registrarUsuario,
-        usuarioAutenticado,
         iniciarSesion,
+        usuarioAutenticado,
       }}
     >
       {children}
