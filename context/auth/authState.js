@@ -8,9 +8,11 @@ import {
   LIMPIAR_ALERTA,
   LOGIN_EXITOSO,
   LOGIN_ERROR,
+  USUARIO_AUTENTICADO,
 } from "@/types";
 
 import clienteAxios from "@/config/axios";
+import tokenAuth from "@/config/tokenAuth";
 
 const AuthState = ({ children }) => {
   //Definir un state inicial
@@ -71,16 +73,20 @@ const AuthState = ({ children }) => {
   };
 
   const usuarioAutenticado = async () => {
-    console.log("Revisando...");
-  };
+    const token = localStorage.getItem("token");
 
-  // // Usuario autenticado
-  // const usuarioAutenticado = (nombre) => {
-  //   dispatch({
-  //     type: USUARIO_AUTENTICADO,
-  //     payload: nombre,
-  //   });
-  // };
+    if (token) {
+      tokenAuth(token);
+    }
+
+    try {
+      const respuesta = await clienteAxios.get("/api/auth");
+      dispatch({
+        type: USUARIO_AUTENTICADO,
+        payload: respuesta.data.usuario,
+      });
+    } catch (error) {}
+  };
 
   return (
     <authContext.Provider

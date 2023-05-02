@@ -4,6 +4,7 @@ import {
   LIMPIAR_ALERTA,
   LOGIN_ERROR,
   LOGIN_EXITOSO,
+  USUARIO_AUTENTICADO,
 } from "@/types";
 
 export default (state, action) => {
@@ -34,6 +35,11 @@ export default (state, action) => {
       return {
         ...state,
         mensaje: null,
+      };
+    case USUARIO_AUTENTICADO:
+      return {
+        ...state,
+        usuario: action.payload,
       };
     default:
       return state;
