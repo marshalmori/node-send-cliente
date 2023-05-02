@@ -1,12 +1,19 @@
+import { useContext } from "react";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import Layout from "@/components/Layout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import authContext from "@/context/auth/authContext";
+import Alerta from "@/components/Alerta";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const Login = () => {
+  // definir el context
+  const AuthContext = useContext(authContext);
+  const { mensaje, iniciarSesion } = AuthContext;
+
   // Fomulario y validación con Formik y Yup
   const formik = useFormik({
     initialValues: {
@@ -20,7 +27,7 @@ const Login = () => {
       password: Yup.string().required("El password no puede ir vacio"),
     }),
     onSubmit: (valores) => {
-      console.log(valores);
+      iniciarSesion(valores);
     },
   });
 
@@ -30,6 +37,7 @@ const Login = () => {
         <h2 className="text-4xl font-sans font-bold text-gray-800 text-center my-4">
           Iniciar Sesión
         </h2>
+        {mensaje && <Alerta />}
         <div className="flex justify-center mt-5">
           <div className="w-full max-w-lg">
             <form

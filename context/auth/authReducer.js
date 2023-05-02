@@ -1,4 +1,10 @@
-import { REGISTRO_EXITOSO, REGISTRO_ERROR, LIMPIAR_ALERTA } from "@/types";
+import {
+  REGISTRO_EXITOSO,
+  REGISTRO_ERROR,
+  LIMPIAR_ALERTA,
+  LOGIN_ERROR,
+  LOGIN_EXITOSO,
+} from "@/types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -8,6 +14,11 @@ export default (state, action) => {
         mensaje: action.payload,
       };
     case REGISTRO_ERROR:
+      return {
+        ...state,
+        mensaje: action.payload,
+      };
+    case LOGIN_ERROR:
       return {
         ...state,
         mensaje: action.payload,
