@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import Layout from "@/components/Layout";
@@ -6,13 +6,23 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import authContext from "@/context/auth/authContext";
 import Alerta from "@/components/Alerta";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const Login = () => {
   // definir el context
   const AuthContext = useContext(authContext);
-  const { mensaje, iniciarSesion } = AuthContext;
+  const { mensaje, autenticado, iniciarSesion } = AuthContext;
+
+  // Next router
+  const router = useRouter();
+
+  useEffect(() => {
+    if (autenticado) {
+      router.push("/");
+    }
+  }, [autenticado]);
 
   // Fomulario y validación con Formik y Yup
   const formik = useFormik({
