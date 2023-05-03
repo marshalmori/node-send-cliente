@@ -1,8 +1,10 @@
 import Layout from "@/components/Layout";
 import clienteAxios from "@/config/axios";
 
-export async function getStaticProps() {
-  const resultado = await clienteAxios.get("/api/enlaces/HYT3aGiGA");
+export async function getServerSideProps({ params }) {
+  const { enlace } = params;
+
+  const resultado = await clienteAxios.get("/api/enlaces/${enlace}");
 
   return {
     props: {
@@ -11,7 +13,7 @@ export async function getStaticProps() {
   };
 }
 
-export async function getStaticPaths() {
+export async function getServerSidePaths() {
   const enlaces = await clienteAxios.get("/api/enlaces");
 
   return {
