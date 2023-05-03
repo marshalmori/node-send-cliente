@@ -1,9 +1,12 @@
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
 import clienteAxios from "@/config/axios";
+import appContext from "@/context/app/appContext";
 
 const Dropzone = () => {
   //
+  const AppContext = useContext(appContext);
+  const { mostrarAlerta } = AppContext;
 
   const onDropAccepted = useCallback(async (acceptedFiles) => {
     console.log(acceptedFiles);
@@ -17,7 +20,7 @@ const Dropzone = () => {
   }, []);
 
   const onDropRejected = useCallback(async () => {
-    console.log("No se pudo subir");
+    mostrarAlerta("No se pudo subir");
   }, []);
 
   // Estraer contenido de Dropzone
