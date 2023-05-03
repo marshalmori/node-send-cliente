@@ -12,7 +12,7 @@ import {
 
 const AppState = ({ children }) => {
   const initialState = {
-    mensaje_archivo: "",
+    mensaje_archivo: null,
   };
 
   //Crear dispatch y state
@@ -20,10 +20,16 @@ const AppState = ({ children }) => {
 
   // Muestra una alerta
   const mostrarAlerta = (msg) => {
-    dispatchEvent({
+    dispatch({
       type: MOSTRAR_ALERTA,
       payload: msg,
     });
+
+    setTimeout(() => {
+      dispatch({
+        type: OCULTAR_ALERTA,
+      });
+    }, 3000);
   };
   return (
     <appContext.Provider

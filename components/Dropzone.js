@@ -19,8 +19,10 @@ const Dropzone = () => {
     console.log(resultado.data);
   }, []);
 
-  const onDropRejected = useCallback(async () => {
-    mostrarAlerta("No se pudo subir");
+  const onDropRejected = useCallback(() => {
+    mostrarAlerta(
+      "No se pudo subir, el limite es 1MB, obten una cuenta gratis para subir archivos más grandes"
+    );
   }, []);
 
   // Estraer contenido de Dropzone
