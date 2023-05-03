@@ -16,7 +16,7 @@ const Header = () => {
       <Link href={"/"}>
         <Image
           className="w-64 mb-8 md:mb-0 "
-          src="logo.svg"
+          src="/logo.svg"
           alt="Logo React Node Send"
           width={300}
           height={300}
