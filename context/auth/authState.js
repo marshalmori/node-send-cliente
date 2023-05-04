@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import React, { useReducer } from "react";
 import authContext from "./authContext";
 import authReducer from "./authReducer";
 
@@ -10,18 +10,19 @@ import {
   LOGIN_ERROR,
   USUARIO_AUTENTICADO,
   CERRAR_SESION,
-} from "@/types";
+} from "../../types";
 
-import clienteAxios from "@/config/axios";
-import tokenAuth from "@/config/tokenAuth";
+import clienteAxios from "../../config/axios";
+import tokenAuth from "../../config/tokenAuth";
 
 const AuthState = ({ children }) => {
-  //Definir un state inicial
+  // Definir un state inicial
   const initialState = {
     token: typeof window !== "undefined" ? localStorage.getItem("token") : "",
     autenticado: null,
     usuario: null,
     mensaje: null,
+    cargando: null,
   };
 
   // Definir el reducer
@@ -31,7 +32,6 @@ const AuthState = ({ children }) => {
   const registrarUsuario = async (datos) => {
     try {
       const respuesta = await clienteAxios.post("/api/usuarios", datos);
-      console.log(respuesta);
       dispatch({
         type: REGISTRO_EXITOSO,
         payload: respuesta.data.msg,
@@ -42,7 +42,6 @@ const AuthState = ({ children }) => {
         payload: error.response.data.msg,
       });
     }
-
     // Limpia la alerta después de 3 segundos
     setTimeout(() => {
       dispatch({
@@ -57,25 +56,26 @@ const AuthState = ({ children }) => {
       const respuesta = await clienteAxios.post("/api/auth", datos);
       dispatch({
         type: LOGIN_EXITOSO,
-        payload: respuesta.data.token,
+        payload: respuesta.data?.token,
       });
     } catch (error) {
       dispatch({
         type: LOGIN_ERROR,
-        payload: error.response.data.msg,
+        payload: error.response?.data.msg,
       });
-      // Limpia la alerta después de 3 segundos
-      setTimeout(() => {
-        dispatch({
-          type: OCULTAR_ALERTA,
-        });
-      }, 3000);
     }
+
+    // Limpia la alerta después de 3 segundos
+    setTimeout(() => {
+      dispatch({
+        type: OCULTAR_ALERTA,
+      });
+    }, 3000);
   };
 
+  // Retorne el Usuario autenticado en base al JWT
   const usuarioAutenticado = async () => {
     const token = localStorage.getItem("token");
-
     if (token) {
       tokenAuth(token);
     }
@@ -110,6 +110,7 @@ const AuthState = ({ children }) => {
         autenticado: state.autenticado,
         usuario: state.usuario,
         mensaje: state.mensaje,
+        cargando: state.cargando,
         registrarUsuario,
         iniciarSesion,
         usuarioAutenticado,

@@ -104,7 +104,7 @@ export default ({ enlace }) => {
           </h1>
           <div className="flex items-center justify-center mt-10">
             <a
-              href={`http:localhost:3000/api/archivos/${enlace.archivo}`}
+              href={`http://localhost:3000/api/archivos/${enlace.archivo}`}
               className="bg-red-500 text-center px-10 py-3 rounded uppercase font-bold text-white cursor-pointer"
               download
             >
